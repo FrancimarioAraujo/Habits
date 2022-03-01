@@ -1,4 +1,5 @@
 import 'package:click/app/components/BottomNavigationBar.dart';
+import 'package:click/app/components/NewRoutineAlertDialog.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,11 +17,14 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: const Text("Inicio"),
       ),
-      body: const Center(
-        child: Text("Teste"),
-      ),
+      body: Container(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => NewRoutineAlertDialog(),
+          );
+        },
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: const BottomNavigation(),

@@ -1,3 +1,5 @@
+import 'package:click/app/routes/Routes.dart';
+import 'package:click/app/screens/RoutineScreen.dart';
 import 'package:click/app/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const HomeScreen(),
+      routes: Routes.routes,
     );
   }
 }
