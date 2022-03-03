@@ -1,4 +1,7 @@
+import 'package:click/app/db/RoutinesDB.dart';
+import 'package:click/app/models/Routine.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class NewRoutineAlertDialog extends StatefulWidget {
   @override
@@ -7,6 +10,12 @@ class NewRoutineAlertDialog extends StatefulWidget {
 
 class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
   final _formKey = GlobalKey<FormState>();
+  final _uuid = Uuid();
+
+  String _generateNewRoutineId() {
+    return _uuid.v4();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -34,9 +43,9 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      RoutinesDB.instance.createRoutine(
+                          Routine(id: _generateNewRoutineId(), name: "teste"));
+                      Navigator.pop(context);
                     }
                   },
                   child: const Text("Criar"),

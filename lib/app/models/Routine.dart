@@ -1,3 +1,10 @@
+final String tableRoutines = "tableRoutines";
+
+class RoutineFields {
+  static final String id = 'id';
+  static final String name = 'name';
+}
+
 class Routine {
   final String id;
   final String name;
@@ -7,12 +14,10 @@ class Routine {
     required this.name,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-    };
-  }
+  Map<String, Object> toJson() => {
+        RoutineFields.id: id,
+        RoutineFields.name: name,
+      };
 
   @override
   String toString() {
