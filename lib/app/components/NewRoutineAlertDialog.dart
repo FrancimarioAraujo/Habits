@@ -1,5 +1,6 @@
 import 'package:click/app/db/RoutinesDB.dart';
 import 'package:click/app/models/Routine.dart';
+import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -43,7 +44,7 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      RoutinesDB.instance.createRoutine(
+                      RoutinesProvider.instance.createRoutine(
                           Routine(id: _generateNewRoutineId(), name: "teste"));
                       Navigator.pop(context);
                     }
