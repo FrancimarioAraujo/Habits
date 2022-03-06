@@ -11,12 +11,14 @@ class NewRoutineAlertDialog extends StatefulWidget {
 
 class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
   final _formKey = GlobalKey<FormState>();
+
   late RoutinesProvider routinesProvider;
   final TextEditingController _nameRoutineTextController =
       TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme themeColor = Theme.of(context).colorScheme;
     routinesProvider = Provider.of<RoutinesProvider>(context);
     return AlertDialog(
       title: const Text("Adicionar novo hábito"),

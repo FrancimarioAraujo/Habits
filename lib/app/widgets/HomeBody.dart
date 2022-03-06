@@ -1,5 +1,4 @@
 import 'package:click/app/components/CardRoutine.dart';
-import 'package:click/app/db/RoutinesDB.dart';
 import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +13,6 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     Provider.of<RoutinesProvider>(context).fetchRoutines();
   }

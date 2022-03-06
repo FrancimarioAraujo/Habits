@@ -29,8 +29,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Configurações',
+          icon: Icon(Icons.bar_chart),
+          label: 'Relátorios',
         ),
       ],
       currentIndex: _selectedIndex,

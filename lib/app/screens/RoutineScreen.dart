@@ -1,11 +1,12 @@
+import 'package:click/app/models/Routine.dart';
 import 'package:flutter/material.dart';
 
-class AddNewRoutineScreen extends StatefulWidget {
+class RoutineScreen extends StatefulWidget {
   @override
-  _AddNewRoutineScreenState createState() => _AddNewRoutineScreenState();
+  _RoutineScreenState createState() => _RoutineScreenState();
 }
 
-class _AddNewRoutineScreenState extends State<AddNewRoutineScreen> {
+class _RoutineScreenState extends State<RoutineScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
