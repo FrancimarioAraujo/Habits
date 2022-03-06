@@ -2,7 +2,7 @@ import 'package:click/app/db/RoutinesDB.dart';
 import 'package:click/app/models/Routine.dart';
 import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
+import 'package:provider/provider.dart';
 
 class NewRoutineAlertDialog extends StatefulWidget {
   @override
@@ -11,14 +11,13 @@ class NewRoutineAlertDialog extends StatefulWidget {
 
 class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
   final _formKey = GlobalKey<FormState>();
-  final _uuid = Uuid();
-
-  String _generateNewRoutineId() {
-    return _uuid.v4();
-  }
+  late RoutinesProvider routinesProvider;
+  final TextEditingController _nameRoutineTextController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    routinesProvider = Provider.of<RoutinesProvider>(context);
     return AlertDialog(
       title: const Text("Adicionar novo hábito"),
       content: Form(
@@ -29,6 +28,7 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextFormField(
+                controller: _nameRoutineTextController,
                 decoration: const InputDecoration(
                   labelText: "Nome",
                 ),
@@ -42,10 +42,10 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      RoutinesProvider.instance.createRoutine(
-                          Routine(id: _generateNewRoutineId(), name: "teste"));
+                      await routinesProvider
+                          .createRoutine(_nameRoutineTextController.text);
                       Navigator.pop(context);
                     }
                   },

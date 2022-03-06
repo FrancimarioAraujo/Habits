@@ -1,5 +1,8 @@
+import 'package:click/app/components/CardRoutine.dart';
+import 'package:click/app/db/RoutinesDB.dart';
 import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeBody extends StatefulWidget {
   @override
@@ -7,22 +10,22 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  late RoutinesProvider routinesProvider;
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    RoutinesProvider.instance.fetchRoutines();
+    Provider.of<RoutinesProvider>(context).fetchRoutines();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(RoutinesProvider.instance.routines);
+    routinesProvider = Provider.of<RoutinesProvider>(context);
     return ListView.builder(
-      itemCount: RoutinesProvider.instance.routines.length,
+      itemCount: routinesProvider.routines.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(RoutinesProvider.instance.routines[index].name),
-        );
+        return CardRoutine(routinesProvider.routines[index]);
       },
     );
   }

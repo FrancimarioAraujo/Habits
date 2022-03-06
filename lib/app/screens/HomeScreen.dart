@@ -1,7 +1,6 @@
 import 'package:click/app/components/BottomNavigationBar.dart';
 import 'package:click/app/components/NewRoutineAlertDialog.dart';
-import 'package:click/app/db/RoutinesDB.dart';
-import 'package:click/app/screens/ListRoutinesScreen.dart';
+
 import 'package:click/app/widgets/HomeBody.dart';
 import 'package:flutter/material.dart';
 
