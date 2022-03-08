@@ -10,21 +10,32 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   late RoutinesProvider routinesProvider;
-
+  bool _loading = true;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<RoutinesProvider>(context).fetchRoutines();
+    Provider.of<RoutinesProvider>(context).fetchRoutines().then((value) {
+      setState(() {
+        _loading = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     routinesProvider = Provider.of<RoutinesProvider>(context);
-    return ListView.builder(
-      itemCount: routinesProvider.routines.length,
-      itemBuilder: (context, index) {
-        return CardRoutine(routinesProvider.routines[index]);
-      },
-    );
+    ColorScheme themeColor = Theme.of(context).colorScheme;
+    return _loading
+        ? Center(
+            child: CircularProgressIndicator(
+              color: themeColor.secondary,
+            ),
+          )
+        : ListView.builder(
+            itemCount: routinesProvider.routines.length,
+            itemBuilder: (context, index) {
+              return CardRoutine(routinesProvider.routines[index]);
+            },
+          );
   }
 }

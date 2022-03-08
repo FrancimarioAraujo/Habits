@@ -47,4 +47,10 @@ class RoutinesProvider with ChangeNotifier {
     await _routinesDB.createRoutine(routine);
     notifyListeners();
   }
+
+  Future<void> deleteRoutine(Routine routine) async {
+    routines.remove(routine);
+    await _routinesDB.deleteRoutine(routine);
+    notifyListeners();
+  }
 }

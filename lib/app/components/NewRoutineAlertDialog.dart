@@ -1,5 +1,3 @@
-import 'package:click/app/db/RoutinesDB.dart';
-import 'package:click/app/models/Routine.dart';
 import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
