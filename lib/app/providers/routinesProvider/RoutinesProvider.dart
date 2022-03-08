@@ -16,16 +16,25 @@ class RoutinesProvider with ChangeNotifier {
     return _uuid.v4();
   }
 
+  Future<void> concludeOrMarkOffRoutine(Routine routine, bool value) async {
+    routine.concluded = value;
+    await _routinesDB.updateRoutine(routine);
+    notifyListeners();
+  }
+
   Routine convertToRoutineModel(
-      {dynamic routineQuery, String? id, String? name}) {
-    if (id != null && name != null) {
-      return Routine(id: id, name: name);
+      {dynamic routineQuery, String? id, String? name, bool? concluded}) {
+    if (id != null && name != null && concluded != null) {
+      return Routine(id: id, name: name, concluded: concluded);
     } else {
       if (routineQuery != null) {
         dynamic routineDecoded = jsonDecode(routineQuery);
-        return Routine(id: routineDecoded["id"], name: routineDecoded["name"]);
+        return Routine(
+            id: routineDecoded["id"],
+            name: routineDecoded["name"],
+            concluded: routineDecoded["concluded"] == 1);
       }
-      return Routine(id: "", name: "");
+      return Routine(id: "", name: "", concluded: false);
     }
   }
 
@@ -41,8 +50,8 @@ class RoutinesProvider with ChangeNotifier {
   }
 
   Future<void> createRoutine(String name) async {
-    Routine routine =
-        convertToRoutineModel(id: _generateNewRoutineId(), name: name);
+    Routine routine = convertToRoutineModel(
+        id: _generateNewRoutineId(), name: name, concluded: false);
     routines.add(routine);
     await _routinesDB.createRoutine(routine);
     notifyListeners();

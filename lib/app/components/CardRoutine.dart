@@ -15,7 +15,15 @@ class CardRoutine extends StatefulWidget {
 class _CardRoutineState extends State<CardRoutine> {
   late RoutinesProvider routinesProvider;
   final RoutesNames _routesNames = RoutesNames.instance;
-  bool? _selected = false;
+  bool? _selected;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _selected = widget.routine.concluded;
+  }
+
   @override
   Widget build(BuildContext context) {
     routinesProvider = Provider.of<RoutinesProvider>(context);
@@ -43,7 +51,7 @@ class _CardRoutineState extends State<CardRoutine> {
               leading: CircleAvatar(
                 backgroundColor: themeColor.tertiary,
                 child: Text(
-                  widget.routine.name.substring(0, 1).toUpperCase(),
+                  widget.routine.name.substring(0, 1),
                   style: TextStyle(
                     color: themeColor.primary,
                     fontWeight: FontWeight.bold,
@@ -65,6 +73,8 @@ class _CardRoutineState extends State<CardRoutine> {
                   value: _selected,
                   shape: const CircleBorder(),
                   onChanged: (value) {
+                    routinesProvider.concludeOrMarkOffRoutine(
+                        widget.routine, value!);
                     setState(() {
                       _selected = value;
                     });

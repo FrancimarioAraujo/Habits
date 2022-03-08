@@ -11,6 +11,7 @@ class HomeBody extends StatefulWidget {
 class _HomeBodyState extends State<HomeBody> {
   late RoutinesProvider routinesProvider;
   bool _loading = true;
+  bool _hasRoutines = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -25,17 +26,28 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     routinesProvider = Provider.of<RoutinesProvider>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
+    _hasRoutines = routinesProvider.routines.isNotEmpty;
     return _loading
         ? Center(
             child: CircularProgressIndicator(
               color: themeColor.secondary,
             ),
           )
-        : ListView.builder(
-            itemCount: routinesProvider.routines.length,
-            itemBuilder: (context, index) {
-              return CardRoutine(routinesProvider.routines[index]);
-            },
-          );
+        : _hasRoutines
+            ? ListView.builder(
+                itemCount: routinesProvider.routines.length,
+                itemBuilder: (context, index) {
+                  return CardRoutine(routinesProvider.routines[index]);
+                },
+              )
+            : const Center(
+                child: Text(
+                  "Não há Hábitos",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              );
   }
 }

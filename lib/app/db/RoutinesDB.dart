@@ -24,10 +24,12 @@ class RoutinesDB {
   Future _createDB(Database db, int version) async {
     const idType = 'TEXT PRIMARY KEY';
     const textType = 'TEXT NOT NULL';
+    const integerType = 'INTEGER NOT NULL';
     await db.execute('''
       CREATE TABLE $tableRoutines(
         ${RoutineFields.id} $idType, 
-        ${RoutineFields.name} $textType
+        ${RoutineFields.name} $textType,
+        ${RoutineFields.concluded} $integerType 
       )
 ''');
   }
