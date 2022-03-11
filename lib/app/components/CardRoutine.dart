@@ -40,7 +40,8 @@ class _CardRoutineState extends State<CardRoutine> {
           ),
           key: ValueKey<Routine>(widget.routine),
           onDismissed: (DismissDirection direction) async {
-            await routinesProvider.deleteRoutine(widget.routine);
+            await routinesProvider.addOrRemoveRoutineFromTrash(
+                widget.routine, true);
           },
           child: Card(
             shape: RoundedRectangleBorder(

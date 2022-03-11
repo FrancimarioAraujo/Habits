@@ -7,6 +7,9 @@ import 'package:sqflite/sqflite.dart';
 class RoutinesDB {
   static final RoutinesDB instance = RoutinesDB._init();
   static Database? _database;
+  String idType = 'TEXT PRIMARY KEY';
+  String textType = 'TEXT NOT NULL';
+  String integerType = 'INTEGER NOT NULL';
   RoutinesDB._init();
 
   Future<Database> get database async {
@@ -18,20 +21,27 @@ class RoutinesDB {
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path,
+        version: 2, onCreate: _createDB, onUpgrade: _onUpgrade);
   }
 
   Future _createDB(Database db, int version) async {
-    const idType = 'TEXT PRIMARY KEY';
-    const textType = 'TEXT NOT NULL';
-    const integerType = 'INTEGER NOT NULL';
     await db.execute('''
       CREATE TABLE $tableRoutines(
         ${RoutineFields.id} $idType, 
         ${RoutineFields.name} $textType,
-        ${RoutineFields.concluded} $integerType 
+        ${RoutineFields.concluded} $integerType,
+        ${RoutineFields.onTrash} $integerType
+         
       )
 ''');
+  }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) {
+    if (oldVersion < 3) {
+      db.execute(
+          "ALTER TABLE $tableRoutines ADD COLUMN ${RoutineFields.onTrash} $integerType;");
+    }
   }
 
   Future<void> createRoutine(Routine routine) async {

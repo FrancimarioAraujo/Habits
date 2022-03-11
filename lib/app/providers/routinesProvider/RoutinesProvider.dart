@@ -22,19 +22,45 @@ class RoutinesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addOrRemoveRoutineFromTrash(
+      Routine routine, bool onTrash) async {
+    routine.onTrash = onTrash;
+    await _routinesDB.updateRoutine(routine);
+    notifyListeners();
+  }
+
+  List<Routine> getAllRoutinesOnTrash() {
+    List<Routine> routinesOnTrash = [];
+    routinesOnTrash = routines.where((routine) => routine.onTrash).toList();
+    return routinesOnTrash;
+  }
+
+  List<Routine> getAllRoutinesOutSideFromTrash() {
+    List<Routine> routinesOutSideFromTrash = [];
+    routinesOutSideFromTrash =
+        routines.where((routine) => !routine.onTrash).toList();
+    return routinesOutSideFromTrash;
+  }
+
   Routine convertToRoutineModel(
-      {dynamic routineQuery, String? id, String? name, bool? concluded}) {
-    if (id != null && name != null && concluded != null) {
-      return Routine(id: id, name: name, concluded: concluded);
+      {dynamic routineQuery,
+      String? id,
+      String? name,
+      bool? concluded,
+      bool? onTrash}) {
+    if (id != null && name != null && concluded != null && onTrash != null) {
+      return Routine(
+          id: id, name: name, concluded: concluded, onTrash: onTrash);
     } else {
       if (routineQuery != null) {
         dynamic routineDecoded = jsonDecode(routineQuery);
         return Routine(
             id: routineDecoded["id"],
             name: routineDecoded["name"],
-            concluded: routineDecoded["concluded"] == 1);
+            concluded: routineDecoded["concluded"] == 1,
+            onTrash: routineDecoded["onTrash"] == 1);
       }
-      return Routine(id: "", name: "", concluded: false);
+      return Routine(id: "", name: "", concluded: false, onTrash: false);
     }
   }
 
@@ -51,7 +77,10 @@ class RoutinesProvider with ChangeNotifier {
 
   Future<void> createRoutine(String name) async {
     Routine routine = convertToRoutineModel(
-        id: _generateNewRoutineId(), name: name, concluded: false);
+        id: _generateNewRoutineId(),
+        name: name,
+        concluded: false,
+        onTrash: false);
     routines.add(routine);
     await _routinesDB.createRoutine(routine);
     notifyListeners();

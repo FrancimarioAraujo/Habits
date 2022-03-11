@@ -1,3 +1,4 @@
+import 'package:click/app/widgets/TrashBody.dart';
 import 'package:flutter/material.dart';
 
 class TrashScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class _TrashScreenState extends State<TrashScreen> {
         centerTitle: true,
         title: const Text("Lixeira"),
       ),
+      body: TrashBody(),
     );
   }
 }
