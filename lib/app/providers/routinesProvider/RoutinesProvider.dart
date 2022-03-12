@@ -22,6 +22,29 @@ class RoutinesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> selectOrDeselectToRestore(Routine routine, bool value) async {
+    routine.selectedToRestore = value;
+    notifyListeners();
+  }
+
+  List<Routine> getAllRoutinesSelectedOnTrash() {
+    List<Routine> routinesOnTrash = getAllRoutinesOnTrash();
+    List<Routine> routinesSelectedOnTrash = routinesOnTrash
+        .where((routineOnTrash) => routineOnTrash.selectedToRestore)
+        .toList();
+    return routinesSelectedOnTrash;
+  }
+
+  Future<void> restoreElementsSelectedFromTrash() async {
+    List<Routine> routinesSelectedOnTrash = getAllRoutinesSelectedOnTrash();
+    for (var routineSelectedOnTrash in routinesSelectedOnTrash) {
+      routineSelectedOnTrash.onTrash = false;
+      routineSelectedOnTrash.selectedToRestore = false;
+      await _routinesDB.updateRoutine(routineSelectedOnTrash);
+      notifyListeners();
+    }
+  }
+
   Future<void> addOrRemoveRoutineFromTrash(
       Routine routine, bool onTrash) async {
     routine.onTrash = onTrash;
@@ -47,10 +70,19 @@ class RoutinesProvider with ChangeNotifier {
       String? id,
       String? name,
       bool? concluded,
-      bool? onTrash}) {
-    if (id != null && name != null && concluded != null && onTrash != null) {
+      bool? onTrash,
+      bool? selectedToRestore}) {
+    if (id != null &&
+        name != null &&
+        concluded != null &&
+        onTrash != null &&
+        selectedToRestore != null) {
       return Routine(
-          id: id, name: name, concluded: concluded, onTrash: onTrash);
+          id: id,
+          name: name,
+          concluded: concluded,
+          onTrash: onTrash,
+          selectedToRestore: selectedToRestore);
     } else {
       if (routineQuery != null) {
         dynamic routineDecoded = jsonDecode(routineQuery);
@@ -58,9 +90,16 @@ class RoutinesProvider with ChangeNotifier {
             id: routineDecoded["id"],
             name: routineDecoded["name"],
             concluded: routineDecoded["concluded"] == 1,
-            onTrash: routineDecoded["onTrash"] == 1);
+            onTrash: routineDecoded["onTrash"] == 1,
+            selectedToRestore: routineDecoded["selectedToRestore"] == 1);
       }
-      return Routine(id: "", name: "", concluded: false, onTrash: false);
+      return Routine(
+        id: "",
+        name: "",
+        concluded: false,
+        onTrash: false,
+        selectedToRestore: false,
+      );
     }
   }
 
@@ -77,10 +116,12 @@ class RoutinesProvider with ChangeNotifier {
 
   Future<void> createRoutine(String name) async {
     Routine routine = convertToRoutineModel(
-        id: _generateNewRoutineId(),
-        name: name,
-        concluded: false,
-        onTrash: false);
+      id: _generateNewRoutineId(),
+      name: name,
+      concluded: false,
+      onTrash: false,
+      selectedToRestore: false,
+    );
     routines.add(routine);
     await _routinesDB.createRoutine(routine);
     notifyListeners();

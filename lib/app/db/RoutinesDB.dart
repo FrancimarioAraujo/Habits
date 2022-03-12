@@ -11,6 +11,7 @@ class RoutinesDB {
   String textType = 'TEXT NOT NULL';
   String integerType = 'INTEGER NOT NULL';
   RoutinesDB._init();
+  RoutineFields routineFields = RoutineFields.instance;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -22,25 +23,24 @@ class RoutinesDB {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
     return await openDatabase(path,
-        version: 2, onCreate: _createDB, onUpgrade: _onUpgrade);
+        version: 4, onCreate: _createDB, onUpgrade: _onUpgrade);
   }
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE $tableRoutines(
-        ${RoutineFields.id} $idType, 
-        ${RoutineFields.name} $textType,
-        ${RoutineFields.concluded} $integerType,
-        ${RoutineFields.onTrash} $integerType
-         
+        ${routineFields.id} $idType, 
+        ${routineFields.name} $textType,
+        ${routineFields.concluded} $integerType,
+        ${routineFields.onTrash} $integerType
       )
 ''');
   }
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) {
-    if (oldVersion < 3) {
+    if (oldVersion < 5) {
       db.execute(
-          "ALTER TABLE $tableRoutines ADD COLUMN ${RoutineFields.onTrash} $integerType;");
+          "ALTER TABLE $tableRoutines DROP COLUMN ${routineFields.selectedToRestore} $integerType;");
     }
   }
 
@@ -63,13 +63,13 @@ class RoutinesDB {
   Future<void> updateRoutine(Routine routine) async {
     final db = await instance.database;
     await db.update(tableRoutines, routine.toJson(),
-        where: "${RoutineFields.id} = ?", whereArgs: [routine.id]);
+        where: "${routineFields.id} = ?", whereArgs: [routine.id]);
   }
 
   Future<void> deleteRoutine(Routine routine) async {
     final db = await instance.database;
     await db.delete(tableRoutines,
-        where: '${RoutineFields.id} = ?', whereArgs: [routine.id]);
+        where: '${routineFields.id} = ?', whereArgs: [routine.id]);
   }
 
   Future close() async {

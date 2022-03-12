@@ -1,4 +1,5 @@
 import 'package:click/app/components/CardRoutine.dart';
+import 'package:click/app/components/CardTrash.dart';
 import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class _TrashBodyState extends State<TrashBody> {
             ? ListView.builder(
                 itemCount: routinesProvider.getAllRoutinesOnTrash().length,
                 itemBuilder: (context, index) {
-                  return CardRoutine(
+                  return CardTrash(
                       routinesProvider.getAllRoutinesOnTrash()[index]);
                 },
               )
