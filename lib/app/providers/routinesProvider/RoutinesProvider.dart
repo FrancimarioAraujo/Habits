@@ -45,6 +45,14 @@ class RoutinesProvider with ChangeNotifier {
     }
   }
 
+  Future<void> clearTrash() async {
+    for (var routineOnTrash in getAllRoutinesOnTrash()) {
+      routines.remove(routineOnTrash);
+      await _routinesDB.deleteRoutine(routineOnTrash);
+    }
+    notifyListeners();
+  }
+
   Future<void> addOrRemoveRoutineFromTrash(
       Routine routine, bool onTrash) async {
     routine.onTrash = onTrash;

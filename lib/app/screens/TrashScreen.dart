@@ -14,7 +14,7 @@ class _TrashScreenState extends State<TrashScreen> {
   Widget build(BuildContext context) {
     routinesProvider = Provider.of<RoutinesProvider>(context);
 
-    return routinesProvider.getAllRoutinesSelectedOnTrash().isEmpty
+    return routinesProvider.getAllRoutinesOnTrash().isEmpty
         ? Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -28,12 +28,37 @@ class _TrashScreenState extends State<TrashScreen> {
               title: const Text("Lixeira"),
             ),
             body: TrashBody(),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () async {
-                await routinesProvider.restoreElementsSelectedFromTrash();
-              },
-              child: const Icon(Icons.restore_from_trash),
-            ),
+            floatingActionButton:
+                routinesProvider.getAllRoutinesSelectedOnTrash().isEmpty
+                    ? FloatingActionButton(
+                        onPressed: () async {
+                          await routinesProvider.clearTrash();
+                        },
+                        child: const Icon(Icons.delete_forever),
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: FloatingActionButton(
+                              onPressed: () async {
+                                await routinesProvider
+                                    .restoreElementsSelectedFromTrash();
+                              },
+                              child: const Icon(Icons.restore_from_trash),
+                            ),
+                          ),
+                          FloatingActionButton(
+                            onPressed: () async {
+                              await routinesProvider.clearTrash();
+                            },
+                            child: const Icon(
+                              Icons.delete_forever,
+                            ),
+                          ),
+                        ],
+                      ),
           );
   }
 }
