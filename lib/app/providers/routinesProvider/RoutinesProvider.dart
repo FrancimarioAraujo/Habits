@@ -54,7 +54,7 @@ class RoutinesProvider with ChangeNotifier {
   }
 
   Future<void> addOrRemoveRoutineFromTrash(
-      Routine routine, bool onTrash) async {
+      {required Routine routine, required bool onTrash}) async {
     routine.onTrash = onTrash;
     await _routinesDB.updateRoutine(routine);
     notifyListeners();

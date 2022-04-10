@@ -30,7 +30,7 @@ class _CardTrashState extends State<CardTrash> {
     ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, _routesNames.routineScreen);
+        // Navigator.pushNamed(context, _routesNames.routineScreen);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),

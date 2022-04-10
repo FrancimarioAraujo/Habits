@@ -30,18 +30,18 @@ class _CardRoutineState extends State<CardRoutine> {
     ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, _routesNames.routineScreen);
+        // Navigator.pushNamed(context, _routesNames.routineScreen);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Dismissible(
           background: Container(
-            color: themeColor.secondary,
+            color: Colors.red,
           ),
           key: ValueKey<Routine>(widget.routine),
           onDismissed: (DismissDirection direction) async {
             await routinesProvider.addOrRemoveRoutineFromTrash(
-                widget.routine, true);
+                routine: widget.routine, onTrash: true);
           },
           child: Card(
             shape: RoundedRectangleBorder(
@@ -74,8 +74,23 @@ class _CardRoutineState extends State<CardRoutine> {
                   value: _selected,
                   shape: const CircleBorder(),
                   onChanged: (value) {
-                    routinesProvider.concludeOrMarkOffRoutine(
-                        widget.routine, value!);
+                    routinesProvider
+                        .concludeOrMarkOffRoutine(widget.routine, value!)
+                        .then((_) {
+                      if (value) {
+                        const taskConcluded = SnackBar(
+                          content: Text(
+                            'Atividade marcada como concluida!',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.amber,
+                            ),
+                          ),
+                        );
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(taskConcluded);
+                      }
+                    });
                     setState(() {
                       _selected = value;
                     });

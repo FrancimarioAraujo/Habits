@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Inicio"),
+        title: const Text("Hábitos"),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: const Icon(Icons.add),
       ),
-      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }
