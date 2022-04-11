@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.click">
    <application
-        android:label="click"
+        android:label="Routines"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/routine_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
