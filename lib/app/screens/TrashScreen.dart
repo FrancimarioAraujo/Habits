@@ -38,7 +38,21 @@ class _TrashScreenState extends State<TrashScreen> {
                     child: FloatingActionButton(
                       onPressed: () async {
                         await routinesProvider
-                            .restoreElementsSelectedFromTrash();
+                            .restoreElementsSelectedFromTrash()
+                            .then((_) {
+                          const itensRestored = SnackBar(
+                            content: Text(
+                              'Itens restaurados da Lixeira',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.amber,
+                              ),
+                            ),
+                            duration: Duration(seconds: 1),
+                          );
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(itensRestored);
+                        });
                       },
                       child: const Icon(Icons.restore_from_trash),
                     ),

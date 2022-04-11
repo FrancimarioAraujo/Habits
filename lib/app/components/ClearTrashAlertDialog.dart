@@ -32,6 +32,17 @@ class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
           ),
           onPressed: () async {
             await routinesProvider.clearTrash().then((_) {
+              const trashCleaned = SnackBar(
+                content: Text(
+                  'Lixeira limpada',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber,
+                  ),
+                ),
+                duration: Duration(milliseconds: 500),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(trashCleaned);
               Navigator.pop(context);
             });
           },

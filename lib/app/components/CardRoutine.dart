@@ -86,6 +86,7 @@ class _CardRoutineState extends State<CardRoutine> {
                               color: Colors.amber,
                             ),
                           ),
+                          duration: Duration(milliseconds: 500),
                         );
                         ScaffoldMessenger.of(context)
                             .showSnackBar(taskConcluded);
