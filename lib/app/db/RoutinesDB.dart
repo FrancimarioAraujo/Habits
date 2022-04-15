@@ -46,7 +46,7 @@ class RoutinesDB {
 
   Future<void> createRoutine(Routine routine) async {
     final db = await instance.database;
-    await db.insert(tableRoutines, routine.toJson());
+    await db.insert(tableRoutines, routine.toMap());
   }
 
   Future<List> getRoutines() async {
@@ -62,7 +62,7 @@ class RoutinesDB {
 
   Future<void> updateRoutine(Routine routine) async {
     final db = await instance.database;
-    await db.update(tableRoutines, routine.toJson(),
+    await db.update(tableRoutines, routine.toMap(),
         where: "${routineFields.id} = ?", whereArgs: [routine.id]);
   }
 
