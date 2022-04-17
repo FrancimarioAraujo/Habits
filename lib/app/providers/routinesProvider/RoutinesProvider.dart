@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:click/app/db/RoutinesDB.dart';
 import 'package:click/app/models/Routine.dart';
 import 'package:flutter/material.dart';
-
 import 'package:uuid/uuid.dart';
 
 class RoutinesProvider with ChangeNotifier {
@@ -73,62 +70,25 @@ class RoutinesProvider with ChangeNotifier {
     return routinesOutSideFromTrash;
   }
 
-  Routine convertToRoutineModel(
-      {dynamic routineQuery,
-      String? id,
-      String? name,
-      bool? concluded,
-      bool? onTrash,
-      bool? selectedToRestore}) {
-    if (id != null &&
-        name != null &&
-        concluded != null &&
-        onTrash != null &&
-        selectedToRestore != null) {
-      return Routine(
-          id: id,
-          name: name,
-          concluded: concluded,
-          onTrash: onTrash,
-          selectedToRestore: selectedToRestore);
-    } else {
-      if (routineQuery != null) {
-        dynamic routineDecoded = jsonDecode(routineQuery);
-        return Routine(
-            id: routineDecoded["id"],
-            name: routineDecoded["name"],
-            concluded: routineDecoded["concluded"] == 1,
-            onTrash: routineDecoded["onTrash"] == 1,
-            selectedToRestore: routineDecoded["selectedToRestore"] == 1);
-      }
-      return Routine(
-        id: "",
-        name: "",
-        concluded: false,
-        onTrash: false,
-        selectedToRestore: false,
-      );
-    }
-  }
-
   Future<void> fetchRoutines() async {
     if (routines.isEmpty) {
-      await _routinesDB.getRoutines().then((routinesQuery) {
-        for (var routineQuery in routinesQuery) {
-          routines.add(convertToRoutineModel(routineQuery: routineQuery));
-        }
-      });
+      List<dynamic> routinesQuery = await _routinesDB.getRoutines();
+      for (var routineQuery in routinesQuery) {
+        routines.add(Routine.fromJson(routineQuery));
+      }
       notifyListeners();
     }
   }
 
   Future<void> createRoutine(String name) async {
-    Routine routine = convertToRoutineModel(
-      id: _generateNewRoutineId(),
-      name: name,
-      concluded: false,
-      onTrash: false,
-      selectedToRestore: false,
+    Routine routine = Routine.fromMap(
+      {
+        "id": _generateNewRoutineId(),
+        "name": name,
+        "concluded": false,
+        "onTrash": false,
+        "selectedToRestore": false
+      },
     );
     routines.add(routine);
     await _routinesDB.createRoutine(routine);

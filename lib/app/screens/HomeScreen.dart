@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: HomeBody(),
       floatingActionButton: FloatingActionButton(
+        heroTag: "addNewRoutine",
         onPressed: () {
           showDialog(
             context: context,

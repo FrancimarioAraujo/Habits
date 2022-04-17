@@ -36,6 +36,7 @@ class _TrashScreenState extends State<TrashScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: FloatingActionButton(
+                      heroTag: "restoreFromTrash",
                       onPressed: () async {
                         await routinesProvider
                             .restoreElementsSelectedFromTrash()
@@ -58,6 +59,7 @@ class _TrashScreenState extends State<TrashScreen> {
                     ),
                   ),
                 FloatingActionButton(
+                  heroTag: "clearTrash",
                   onPressed: () async {
                     showDialog(
                       context: context,
