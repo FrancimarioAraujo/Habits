@@ -1,4 +1,4 @@
-import 'package:click/app/models/Routine.dart';
+import 'package:click/app/models/routine_model.dart';
 import 'package:flutter/material.dart';
 
 class RoutineScreen extends StatefulWidget {

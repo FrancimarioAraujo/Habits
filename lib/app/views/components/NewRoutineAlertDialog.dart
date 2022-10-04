@@ -1,4 +1,4 @@
-import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/controllers/routines_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,14 +10,14 @@ class NewRoutineAlertDialog extends StatefulWidget {
 class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
   final _formKey = GlobalKey<FormState>();
 
-  late RoutinesProvider routinesProvider;
+  late RoutinesController routinesProvider;
   final TextEditingController _nameRoutineTextController =
       TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     ColorScheme themeColor = Theme.of(context).colorScheme;
-    routinesProvider = Provider.of<RoutinesProvider>(context);
+    routinesProvider = Provider.of<RoutinesController>(context);
     return AlertDialog(
       title: const Text("Adicionar nova tarefa"),
       content: Form(

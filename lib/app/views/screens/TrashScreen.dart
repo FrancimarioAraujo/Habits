@@ -1,5 +1,5 @@
 import 'package:click/app/views/components/ClearTrashAlertDialog.dart';
-import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/controllers/routines_controller.dart';
 import 'package:click/app/views/widgets/TrashBody.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +10,10 @@ class TrashScreen extends StatefulWidget {
 }
 
 class _TrashScreenState extends State<TrashScreen> {
-  late RoutinesProvider routinesProvider;
+  late RoutinesController routinesProvider;
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutinesProvider>(context);
+    routinesProvider = Provider.of<RoutinesController>(context);
 
     return routinesProvider.getAllRoutinesOnTrash().isEmpty
         ? Scaffold(

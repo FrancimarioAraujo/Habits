@@ -1,19 +1,19 @@
-import 'package:click/app/models/Routine.dart';
-import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/models/routine_model.dart';
+import 'package:click/app/controllers/routines_controller.dart';
 import 'package:click/app/routes/RoutesNames.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 class CardTrash extends StatefulWidget {
-  Routine routine;
+  RoutineModel routine;
   CardTrash(this.routine);
   @override
   State<CardTrash> createState() => _CardTrashState();
 }
 
 class _CardTrashState extends State<CardTrash> {
-  late RoutinesProvider routinesProvider;
+  late RoutinesController routinesProvider;
   final RoutesNames _routesNames = RoutesNames.instance;
   bool? _selected;
 
@@ -26,7 +26,7 @@ class _CardTrashState extends State<CardTrash> {
 
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutinesProvider>(context);
+    routinesProvider = Provider.of<RoutinesController>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {

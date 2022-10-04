@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:click/app/models/Routine.dart';
+import 'package:click/app/models/routine_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -44,7 +44,7 @@ class RoutinesDB {
     }
   }
 
-  Future<void> createRoutine(Routine routine) async {
+  Future<void> createRoutine(RoutineModel routine) async {
     final db = await instance.database;
     await db.insert(tableRoutines, routine.toMap());
   }
@@ -60,13 +60,13 @@ class RoutinesDB {
     return listRoutines;
   }
 
-  Future<void> updateRoutine(Routine routine) async {
+  Future<void> updateRoutine(RoutineModel routine) async {
     final db = await instance.database;
     await db.update(tableRoutines, routine.toMap(),
         where: "${routineFields.id} = ?", whereArgs: [routine.id]);
   }
 
-  Future<void> deleteRoutine(Routine routine) async {
+  Future<void> deleteRoutine(RoutineModel routine) async {
     final db = await instance.database;
     await db.delete(tableRoutines,
         where: '${routineFields.id} = ?', whereArgs: [routine.id]);

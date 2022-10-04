@@ -1,4 +1,4 @@
-import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/controllers/routines_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,10 +8,10 @@ class ClearTrashAlertDialog extends StatefulWidget {
 }
 
 class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
-  late RoutinesProvider routinesProvider;
+  late RoutinesController routinesProvider;
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutinesProvider>(context);
+    routinesProvider = Provider.of<RoutinesController>(context);
     return AlertDialog(
       title: const Text('Esvaziar Lixeira'),
       content: SingleChildScrollView(

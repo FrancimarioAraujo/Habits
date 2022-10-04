@@ -11,7 +11,7 @@ class RoutineFields {
   String selectedToRestore = 'selectedToRestore';
 }
 
-class Routine {
+class RoutineModel {
   final String id;
   final String name;
   bool concluded = false;
@@ -19,7 +19,7 @@ class Routine {
   bool selectedToRestore = false;
   RoutineFields routineFields = RoutineFields.instance;
 
-  Routine({
+  RoutineModel({
     required this.id,
     required this.name,
     required this.concluded,
@@ -42,8 +42,8 @@ class Routine {
     return result;
   }
 
-  factory Routine.fromMap(Map<String, dynamic> map) {
-    return Routine(
+  factory RoutineModel.fromMap(Map<String, dynamic> map) {
+    return RoutineModel(
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       concluded: map['concluded'] == 1,
@@ -54,6 +54,6 @@ class Routine {
 
   String toJson() => json.encode(toMap());
 
-  factory Routine.fromJson(String source) =>
-      Routine.fromMap(json.decode(source));
+  factory RoutineModel.fromJson(String source) =>
+      RoutineModel.fromMap(json.decode(source));
 }

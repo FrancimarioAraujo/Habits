@@ -1,39 +1,39 @@
 import 'package:click/app/db/RoutinesDB.dart';
-import 'package:click/app/models/Routine.dart';
+import 'package:click/app/models/routine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-class RoutinesProvider with ChangeNotifier {
-  static RoutinesProvider instance = RoutinesProvider();
+class RoutinesController with ChangeNotifier {
+  static RoutinesController instance = RoutinesController();
   final RoutinesDB _routinesDB = RoutinesDB.instance;
   final _uuid = const Uuid();
-  List<Routine> routines = [];
+  List<RoutineModel> routines = [];
 
   String _generateNewRoutineId() {
     return _uuid.v4();
   }
 
-  Future<void> concludeOrMarkOffRoutine(Routine routine, bool value) async {
+  Future<void> concludeOrMarkOffRoutine(RoutineModel routine, bool value) async {
     routine.concluded = value;
     await _routinesDB.updateRoutine(routine);
     notifyListeners();
   }
 
-  Future<void> selectOrDeselectToRestore(Routine routine, bool value) async {
+  Future<void> selectOrDeselectToRestore(RoutineModel routine, bool value) async {
     routine.selectedToRestore = value;
     notifyListeners();
   }
 
-  List<Routine> getAllRoutinesSelectedOnTrash() {
-    List<Routine> routinesOnTrash = getAllRoutinesOnTrash();
-    List<Routine> routinesSelectedOnTrash = routinesOnTrash
+  List<RoutineModel> getAllRoutinesSelectedOnTrash() {
+    List<RoutineModel> routinesOnTrash = getAllRoutinesOnTrash();
+    List<RoutineModel> routinesSelectedOnTrash = routinesOnTrash
         .where((routineOnTrash) => routineOnTrash.selectedToRestore)
         .toList();
     return routinesSelectedOnTrash;
   }
 
   Future<void> restoreElementsSelectedFromTrash() async {
-    List<Routine> routinesSelectedOnTrash = getAllRoutinesSelectedOnTrash();
+    List<RoutineModel> routinesSelectedOnTrash = getAllRoutinesSelectedOnTrash();
     for (var routineSelectedOnTrash in routinesSelectedOnTrash) {
       routineSelectedOnTrash.onTrash = false;
       routineSelectedOnTrash.selectedToRestore = false;
@@ -51,20 +51,20 @@ class RoutinesProvider with ChangeNotifier {
   }
 
   Future<void> addOrRemoveRoutineFromTrash(
-      {required Routine routine, required bool onTrash}) async {
+      {required RoutineModel routine, required bool onTrash}) async {
     routine.onTrash = onTrash;
     await _routinesDB.updateRoutine(routine);
     notifyListeners();
   }
 
-  List<Routine> getAllRoutinesOnTrash() {
-    List<Routine> routinesOnTrash = [];
+  List<RoutineModel> getAllRoutinesOnTrash() {
+    List<RoutineModel> routinesOnTrash = [];
     routinesOnTrash = routines.where((routine) => routine.onTrash).toList();
     return routinesOnTrash;
   }
 
-  List<Routine> getAllRoutinesOutSideFromTrash() {
-    List<Routine> routinesOutSideFromTrash = [];
+  List<RoutineModel> getAllRoutinesOutSideFromTrash() {
+    List<RoutineModel> routinesOutSideFromTrash = [];
     routinesOutSideFromTrash =
         routines.where((routine) => !routine.onTrash).toList();
     return routinesOutSideFromTrash;
@@ -74,14 +74,14 @@ class RoutinesProvider with ChangeNotifier {
     if (routines.isEmpty) {
       List<dynamic> routinesQuery = await _routinesDB.getRoutines();
       for (var routineQuery in routinesQuery) {
-        routines.add(Routine.fromJson(routineQuery));
+        routines.add(RoutineModel.fromJson(routineQuery));
       }
       notifyListeners();
     }
   }
 
   Future<void> createRoutine(String name) async {
-    Routine routine = Routine.fromMap(
+    RoutineModel routine = RoutineModel.fromMap(
       {
         "id": _generateNewRoutineId(),
         "name": name,
@@ -95,7 +95,7 @@ class RoutinesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteRoutine(Routine routine) async {
+  Future<void> deleteRoutine(RoutineModel routine) async {
     routines.remove(routine);
     await _routinesDB.deleteRoutine(routine);
     notifyListeners();

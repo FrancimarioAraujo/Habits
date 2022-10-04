@@ -1,6 +1,6 @@
 import 'package:click/app/views/components/CardRoutine.dart';
 import 'package:click/app/views/components/CardTrash.dart';
-import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/controllers/routines_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,13 +10,13 @@ class TrashBody extends StatefulWidget {
 }
 
 class _TrashBodyState extends State<TrashBody> {
-  late RoutinesProvider routinesProvider;
+  late RoutinesController routinesProvider;
   bool _loading = true;
   bool _hasRoutinesOnTrash = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<RoutinesProvider>(context).fetchRoutines().then((value) {
+    Provider.of<RoutinesController>(context).fetchRoutines().then((value) {
       setState(() {
         _loading = false;
       });
@@ -25,7 +25,7 @@ class _TrashBodyState extends State<TrashBody> {
 
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutinesProvider>(context);
+    routinesProvider = Provider.of<RoutinesController>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
     _hasRoutinesOnTrash = routinesProvider.getAllRoutinesOnTrash().isNotEmpty;
     return _loading
