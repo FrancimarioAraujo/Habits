@@ -1,4 +1,4 @@
-import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
     ColorScheme themeColor = Theme.of(context).colorScheme;
     routinesProvider = Provider.of<RoutinesProvider>(context);
     return AlertDialog(
-      title: const Text("Adicionar novo hábito"),
+      title: const Text("Adicionar nova tarefa"),
       content: Form(
         key: _formKey,
         child: SizedBox(
@@ -34,7 +34,7 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Por favor digite o nome do hábito";
+                    return "Por favor digite o nome da tarefa";
                   }
                   return null;
                 },

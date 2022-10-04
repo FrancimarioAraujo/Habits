@@ -1,8 +1,8 @@
-import 'package:click/app/components/BottomNavigationBar.dart';
-import 'package:click/app/components/NewRoutineAlertDialog.dart';
+import 'package:click/app/views/components/BottomNavigationBar.dart';
+import 'package:click/app/views/components/NewRoutineAlertDialog.dart';
 import 'package:click/app/routes/RoutesNames.dart';
 
-import 'package:click/app/widgets/HomeBody.dart';
+import 'package:click/app/views/widgets/HomeBody.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Hábitos"),
+        title: const Text("Tarefas"),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),

@@ -1,6 +1,6 @@
-import 'package:click/app/components/ClearTrashAlertDialog.dart';
-import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
-import 'package:click/app/widgets/TrashBody.dart';
+import 'package:click/app/views/components/ClearTrashAlertDialog.dart';
+import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/views/widgets/TrashBody.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

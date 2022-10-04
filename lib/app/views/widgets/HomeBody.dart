@@ -1,5 +1,5 @@
-import 'package:click/app/components/CardRoutine.dart';
-import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/views/components/CardRoutine.dart';
+import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +44,7 @@ class _HomeBodyState extends State<HomeBody> {
               )
             : const Center(
                 child: Text(
-                  "Não há Hábitos",
+                  "Não há Tarefas",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

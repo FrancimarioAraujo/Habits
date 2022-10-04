@@ -1,5 +1,5 @@
 import 'package:click/app/routes/Routes.dart';
-import 'package:click/app/screens/HomeScreen.dart';
+import 'package:click/app/views/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
-          primary: Colors.black,
-          secondary: Colors.amber,
+          primary: Colors.blue,
+          secondary: Colors.orange,
           tertiary: Colors.white,
         ),
       ),

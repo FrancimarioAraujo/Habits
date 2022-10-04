@@ -1,5 +1,5 @@
 import 'package:click/app/models/Routine.dart';
-import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
 import 'package:click/app/routes/RoutesNames.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

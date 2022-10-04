@@ -1,4 +1,4 @@
-import 'package:click/app/providers/routinesProvider/RoutinesProvider.dart';
+import 'package:click/app/controllers/routinesProvider/RoutinesProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
