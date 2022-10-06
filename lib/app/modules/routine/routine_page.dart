@@ -1,18 +1,16 @@
-import 'package:click/app/views/components/BottomNavigationBar.dart';
 import 'package:click/app/views/components/NewRoutineAlertDialog.dart';
-import 'package:click/app/routes/RoutesNames.dart';
-
 import 'package:click/app/views/widgets/HomeBody.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class RoutinePage extends StatefulWidget {
+  const RoutinePage({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _RoutinePageState createState() => _RoutinePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _RoutinePageState extends State<RoutinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              Navigator.pushNamed(context, RoutesNames.instance.trashScreen);
+              Modular.to.pushNamed('/trash');
             },
           ),
         ],

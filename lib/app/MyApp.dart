@@ -1,6 +1,5 @@
-import 'package:click/app/routes/Routes.dart';
-import 'package:click/app/views/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -8,7 +7,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = ThemeData();
-    return MaterialApp(
+    return MaterialApp.router(
+      title: 'Flutter Slidy',
+      routerDelegate: Modular.routerDelegate,
+      routeInformationParser: Modular.routeInformationParser,
       debugShowCheckedModeBanner: false,
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
@@ -16,9 +18,9 @@ class MyApp extends StatelessWidget {
           secondary: Colors.orange,
           tertiary: Colors.white,
         ),
-      ),
-      home: const HomeScreen(),
-      routes: Routes.routes,
-    );
+    ));
+
+    
   }
 }
+

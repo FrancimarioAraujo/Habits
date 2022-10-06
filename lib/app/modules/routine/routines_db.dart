@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:click/app/models/routine_model.dart';
+import 'package:click/app/modules/routine/routine_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

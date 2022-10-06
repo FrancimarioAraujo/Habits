@@ -1,19 +1,19 @@
 import 'package:click/app/views/components/ClearTrashAlertDialog.dart';
-import 'package:click/app/controllers/routines_controller.dart';
+import 'package:click/app/modules/routine/routine_controller.dart';
 import 'package:click/app/views/widgets/TrashBody.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TrashScreen extends StatefulWidget {
+class TrashPage extends StatefulWidget {
   @override
-  State<TrashScreen> createState() => _TrashScreenState();
+  State<TrashPage> createState() => _TrashPageState();
 }
 
-class _TrashScreenState extends State<TrashScreen> {
-  late RoutinesController routinesProvider;
+class _TrashPageState extends State<TrashPage> {
+  late RoutineController routinesProvider;
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutinesController>(context);
+    routinesProvider = Provider.of<RoutineController>(context);
 
     return routinesProvider.getAllRoutinesOnTrash().isEmpty
         ? Scaffold(

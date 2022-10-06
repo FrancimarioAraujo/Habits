@@ -1,10 +1,10 @@
-import 'package:click/app/db/RoutinesDB.dart';
-import 'package:click/app/models/routine_model.dart';
+import 'package:click/app/modules/routine/routines_db.dart';
+import 'package:click/app/modules/routine/routine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-class RoutinesController with ChangeNotifier {
-  static RoutinesController instance = RoutinesController();
+class RoutineController with ChangeNotifier {
+  static RoutineController instance = RoutineController();
   final RoutinesDB _routinesDB = RoutinesDB.instance;
   final _uuid = const Uuid();
   List<RoutineModel> routines = [];
