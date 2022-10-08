@@ -1,5 +1,5 @@
 import 'package:click/app/modules/routine/routines_db.dart';
-import 'package:click/app/modules/routine/routine_model.dart';
+import 'package:click/app/modules/routine/model/routine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -13,13 +13,15 @@ class RoutineController with ChangeNotifier {
     return _uuid.v4();
   }
 
-  Future<void> concludeOrMarkOffRoutine(RoutineModel routine, bool value) async {
+  Future<void> concludeOrMarkOffRoutine(
+      RoutineModel routine, bool value) async {
     routine.concluded = value;
     await _routinesDB.updateRoutine(routine);
     notifyListeners();
   }
 
-  Future<void> selectOrDeselectToRestore(RoutineModel routine, bool value) async {
+  Future<void> selectOrDeselectToRestore(
+      RoutineModel routine, bool value) async {
     routine.selectedToRestore = value;
     notifyListeners();
   }
@@ -33,7 +35,8 @@ class RoutineController with ChangeNotifier {
   }
 
   Future<void> restoreElementsSelectedFromTrash() async {
-    List<RoutineModel> routinesSelectedOnTrash = getAllRoutinesSelectedOnTrash();
+    List<RoutineModel> routinesSelectedOnTrash =
+        getAllRoutinesSelectedOnTrash();
     for (var routineSelectedOnTrash in routinesSelectedOnTrash) {
       routineSelectedOnTrash.onTrash = false;
       routineSelectedOnTrash.selectedToRestore = false;

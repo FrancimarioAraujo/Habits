@@ -1,7 +1,8 @@
-import 'package:click/app/views/components/NewRoutineAlertDialog.dart';
-import 'package:click/app/views/widgets/HomeBody.dart';
+import 'package:click/app/modules/routine/view/components/NewRoutineAlertDialog.dart';
+import 'package:click/app/modules/routine/view/routine_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:localization/localization.dart';
 
 class RoutinePage extends StatefulWidget {
   const RoutinePage({Key? key}) : super(key: key);
@@ -16,12 +17,12 @@ class _RoutinePageState extends State<RoutinePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Tarefas"),
+        title: Text("tasks".i18n()),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              Modular.to.pushNamed('/trash');
+              Modular.to.pushNamed('/trash/');
             },
           ),
         ],

@@ -1,5 +1,5 @@
-import 'package:click/app/modules/routine/routine_model.dart';
-import 'package:click/app/modules/routine/routine_controller.dart';
+import 'package:click/app/modules/routine/model/routine_model.dart';
+import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';

@@ -1,5 +1,6 @@
-import 'package:click/app/modules/routine/routine_controller.dart';
+import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class ClearTrashAlertDialog extends StatefulWidget {
@@ -16,17 +17,16 @@ class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
       title: const Text('Esvaziar Lixeira'),
       content: SingleChildScrollView(
         child: ListBody(
-          children: const <Widget>[
-            Text(
-                'Se clicar em "Esvaziar", todas as tarefas da lixeira serão apagadas permanentemente!'),
+          children: <Widget>[
+            Text("warningCleanTrashPermanently".i18n()),
           ],
         ),
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text(
-            'Esvaziar',
-            style: TextStyle(
+          child: Text(
+            "clear".i18n(),
+            style: const TextStyle(
               color: Colors.red,
             ),
           ),

@@ -1,0 +1,11 @@
+{
+    "tasks": "Tarefas",
+    "emptyTrash": "Lixeira Vazia",
+    "trash": "Lixeira",
+    "thereAreNoTasks": "Não há tarefas",
+    "clear": "Limpar",
+    "clearTrash": "Esvaziar Lixeira",
+    "cancel": "Cancelar",
+    "warningCleanTrashPermanently": "Se clicar em 'Esvaziar', todas as tarefas da lixeira serão apagadas permanentemente!",
+    "cleanTrash": "Lixeira limpa"
+}

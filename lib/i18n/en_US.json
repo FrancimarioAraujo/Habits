@@ -1,0 +1,11 @@
+{
+    "tasks": "Tasks",
+    "emptyTrash": "Empty trash",
+    "trash": "Trash",
+    "thereAreNoTasks": "There are no tasks",
+    "clear": "Clear",
+    "clearTrash": "Clear trash",
+    "cancel": "Cancel",
+    "warningCleanTrashPermanently": "If you click 'Clear', all tasks in the trash will be permanently deleted!",
+    "cleanTrash": "Clean trash"
+}
