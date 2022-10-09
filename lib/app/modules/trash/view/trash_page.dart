@@ -2,6 +2,7 @@ import 'package:click/app/modules/trash/view/components/clear_trash_alert_dialog
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:click/app/modules/trash/view/trash_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
@@ -14,14 +15,13 @@ class TrashPage extends StatefulWidget {
 }
 
 class _TrashPageState extends State<TrashPage> {
-  late RoutineController routinesProvider;
+  final routinesController = Modular.get<RoutineController>();
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutineController>(context);
     ScreenUtil.init(context,
         designSize: const Size(
             Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
-    return routinesProvider.getAllRoutinesOnTrash().isEmpty
+    return routinesController.getAllRoutinesOnTrash().isEmpty
         ? Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -38,13 +38,15 @@ class _TrashPageState extends State<TrashPage> {
             floatingActionButton: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (routinesProvider.getAllRoutinesSelectedOnTrash().isNotEmpty)
+                if (routinesController
+                    .getAllRoutinesSelectedOnTrash()
+                    .isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10).r,
                     child: FloatingActionButton(
                       heroTag: "restoreFromTrash",
                       onPressed: () async {
-                        await routinesProvider
+                        await routinesController
                             .restoreElementsSelectedFromTrash()
                             .then((_) {
                           var itensRestored = SnackBar(

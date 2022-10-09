@@ -1,5 +1,6 @@
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +10,9 @@ class ClearTrashAlertDialog extends StatefulWidget {
 }
 
 class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
-  late RoutineController routinesProvider;
+  final routinesController = Modular.get<RoutineController>();
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutineController>(context);
     return AlertDialog(
       title: Text("clearTrash".i18n()),
       content: SingleChildScrollView(
@@ -31,7 +31,7 @@ class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
             ),
           ),
           onPressed: () async {
-            await routinesProvider.clearTrash().then((_) {
+            await routinesController.clearTrash().then((_) {
               var trashCleaned = SnackBar(
                 content: Text(
                   "cleanTrash".i18n(),

@@ -2,9 +2,10 @@ import 'package:click/app/modules/routine/view/components/card_routine.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:click/assets/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localization/localization.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class HomeBody extends StatefulWidget {
   @override
@@ -12,13 +13,13 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-  late RoutineController routinesProvider;
   bool _loading = true;
   bool _hasRoutines = false;
+  final routinesController = Modular.get<RoutineController>();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<RoutineController>(context).fetchRoutines().then((value) {
+    routinesController.fetchRoutines().then((value) {
       setState(() {
         _loading = false;
       });
@@ -27,9 +28,9 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutineController>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
-    _hasRoutines = routinesProvider.getAllRoutinesOutSideFromTrash().isNotEmpty;
+    _hasRoutines =
+        routinesController.getAllRoutinesOutSideFromTrash().isNotEmpty;
     ScreenUtil.init(context,
         designSize: const Size(
             Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
@@ -40,13 +41,16 @@ class _HomeBodyState extends State<HomeBody> {
             ),
           )
         : _hasRoutines
-            ? ListView.builder(
-                itemCount:
-                    routinesProvider.getAllRoutinesOutSideFromTrash().length,
-                itemBuilder: (context, index) {
-                  return CardRoutine(
-                      routinesProvider.getAllRoutinesOutSideFromTrash()[index]);
-                },
+            ? Observer(
+                builder: (_) => ListView.builder(
+                  itemCount: routinesController
+                      .getAllRoutinesOutSideFromTrash()
+                      .length,
+                  itemBuilder: (context, index) {
+                    return CardRoutine(routinesController
+                        .getAllRoutinesOutSideFromTrash()[index]);
+                  },
+                ),
               )
             : Center(
                 child: Text(

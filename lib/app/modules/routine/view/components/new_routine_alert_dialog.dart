@@ -1,5 +1,6 @@
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
@@ -14,13 +15,12 @@ class NewRoutineAlertDialog extends StatefulWidget {
 class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
   final _formKey = GlobalKey<FormState>();
 
-  late RoutineController routinesProvider;
+  final routinesController = Modular.get<RoutineController>();
   final TextEditingController _nameRoutineTextController =
       TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutineController>(context);
     ScreenUtil.init(context,
         designSize: const Size(
             Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
@@ -50,7 +50,7 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await routinesProvider
+                      await routinesController
                           .createRoutine(_nameRoutineTextController.text);
                       Navigator.pop(context);
                     }

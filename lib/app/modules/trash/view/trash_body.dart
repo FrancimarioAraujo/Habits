@@ -2,6 +2,7 @@ import 'package:click/app/modules/routine/view/components/card_routine.dart';
 import 'package:click/app/modules/trash/view/components/card_trash.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
@@ -14,13 +15,13 @@ class TrashBody extends StatefulWidget {
 }
 
 class _TrashBodyState extends State<TrashBody> {
-  late RoutineController routinesProvider;
+  final routinesController = Modular.get<RoutineController>();
   bool _loading = true;
   bool _hasRoutinesOnTrash = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<RoutineController>(context).fetchRoutines().then((value) {
+    routinesController.fetchRoutines().then((value) {
       setState(() {
         _loading = false;
       });
@@ -29,9 +30,8 @@ class _TrashBodyState extends State<TrashBody> {
 
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutineController>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
-    _hasRoutinesOnTrash = routinesProvider.getAllRoutinesOnTrash().isNotEmpty;
+    _hasRoutinesOnTrash = routinesController.getAllRoutinesOnTrash().isNotEmpty;
     ScreenUtil.init(context,
         designSize: const Size(
             Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
@@ -43,10 +43,10 @@ class _TrashBodyState extends State<TrashBody> {
           )
         : _hasRoutinesOnTrash
             ? ListView.builder(
-                itemCount: routinesProvider.getAllRoutinesOnTrash().length,
+                itemCount: routinesController.getAllRoutinesOnTrash().length,
                 itemBuilder: (context, index) {
                   return CardTrash(
-                      routinesProvider.getAllRoutinesOnTrash()[index]);
+                      routinesController.getAllRoutinesOnTrash()[index]);
                 },
               )
             : Center(

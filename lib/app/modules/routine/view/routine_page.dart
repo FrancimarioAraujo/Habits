@@ -1,6 +1,7 @@
 import 'package:click/app/modules/routine/view/components/new_routine_alert_dialog.dart';
 import 'package:click/app/modules/routine/view/routine_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:localization/localization.dart';
 
@@ -27,7 +28,7 @@ class _RoutinePageState extends State<RoutinePage> {
           ),
         ],
       ),
-      body: HomeBody(),
+      body: Observer(builder: (_) => HomeBody()),
       floatingActionButton: FloatingActionButton(
         heroTag: "addNewRoutine",
         onPressed: () {

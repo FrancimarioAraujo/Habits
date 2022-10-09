@@ -1,6 +1,7 @@
 import 'package:click/app/modules/routine/model/routine_model.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:localization/localization.dart';
@@ -16,7 +17,7 @@ class CardRoutine extends StatefulWidget {
 }
 
 class _CardRoutineState extends State<CardRoutine> {
-  late RoutineController routinesProvider;
+  final routinesController = Modular.get<RoutineController>();
   bool? _selected;
 
   @override
@@ -28,7 +29,6 @@ class _CardRoutineState extends State<CardRoutine> {
 
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutineController>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
     ScreenUtil.init(context,
         designSize: const Size(
@@ -43,7 +43,7 @@ class _CardRoutineState extends State<CardRoutine> {
           ),
           key: ValueKey<RoutineModel>(widget.routine),
           onDismissed: (DismissDirection direction) async {
-            await routinesProvider.addOrRemoveRoutineFromTrash(
+            await routinesController.addOrRemoveRoutineFromTrash(
                 routine: widget.routine, onTrash: true);
           },
           child: Card(
@@ -77,7 +77,7 @@ class _CardRoutineState extends State<CardRoutine> {
                   value: _selected,
                   shape: const CircleBorder(),
                   onChanged: (value) {
-                    routinesProvider
+                    routinesController
                         .concludeOrMarkOffRoutine(widget.routine, value!)
                         .then((_) {
                       if (value) {

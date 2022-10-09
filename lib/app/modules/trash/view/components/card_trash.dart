@@ -1,6 +1,7 @@
 import 'package:click/app/modules/routine/model/routine_model.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class CardTrash extends StatefulWidget {
 }
 
 class _CardTrashState extends State<CardTrash> {
-  late RoutineController routinesProvider;
+  final routinesController = Modular.get<RoutineController>();
   bool? _selected;
 
   @override
@@ -27,7 +28,6 @@ class _CardTrashState extends State<CardTrash> {
 
   @override
   Widget build(BuildContext context) {
-    routinesProvider = Provider.of<RoutineController>(context);
     ScreenUtil.init(context,
         designSize: const Size(
             Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
@@ -69,7 +69,7 @@ class _CardTrashState extends State<CardTrash> {
                 value: _selected,
                 shape: const CircleBorder(),
                 onChanged: (value) {
-                  routinesProvider.selectOrDeselectToRestore(
+                  routinesController.selectOrDeselectToRestore(
                       widget.routine, value!);
                   setState(() {
                     _selected = value;
