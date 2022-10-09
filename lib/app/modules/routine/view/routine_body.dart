@@ -1,6 +1,9 @@
-import 'package:click/app/modules/routine/view/components/CardRoutine.dart';
+import 'package:click/app/modules/routine/view/components/card_routine.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
+import 'package:click/assets/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 
 class HomeBody extends StatefulWidget {
@@ -27,6 +30,9 @@ class _HomeBodyState extends State<HomeBody> {
     routinesProvider = Provider.of<RoutineController>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
     _hasRoutines = routinesProvider.getAllRoutinesOutSideFromTrash().isNotEmpty;
+    ScreenUtil.init(context,
+        designSize: const Size(
+            Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
     return _loading
         ? Center(
             child: CircularProgressIndicator(
@@ -42,12 +48,12 @@ class _HomeBodyState extends State<HomeBody> {
                       routinesProvider.getAllRoutinesOutSideFromTrash()[index]);
                 },
               )
-            : const Center(
+            : Center(
                 child: Text(
-                  "Não há Tarefas",
+                  "thereAreNoTasks".i18n(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                   ),
                 ),
               );

@@ -1,4 +1,4 @@
-import 'package:click/app/modules/routine/view/components/NewRoutineAlertDialog.dart';
+import 'package:click/app/modules/routine/view/components/new_routine_alert_dialog.dart';
 import 'package:click/app/modules/routine/view/routine_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';

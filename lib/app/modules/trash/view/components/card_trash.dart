@@ -1,8 +1,11 @@
 import 'package:click/app/modules/routine/model/routine_model.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../assets/constants.dart';
 
 class CardTrash extends StatefulWidget {
   RoutineModel routine;
@@ -25,13 +28,16 @@ class _CardTrashState extends State<CardTrash> {
   @override
   Widget build(BuildContext context) {
     routinesProvider = Provider.of<RoutineController>(context);
+    ScreenUtil.init(context,
+        designSize: const Size(
+            Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
     ColorScheme themeColor = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {
         // Navigator.pushNamed(context, _routesNames.routineScreen);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5).r,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

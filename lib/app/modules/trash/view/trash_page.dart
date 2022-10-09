@@ -1,8 +1,12 @@
-import 'package:click/app/modules/trash/view/components/ClearTrashAlertDialog.dart';
+import 'package:click/app/modules/trash/view/components/clear_trash_alert_dialog.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:click/app/modules/trash/view/trash_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../assets/constants.dart';
 
 class TrashPage extends StatefulWidget {
   @override
@@ -14,19 +18,21 @@ class _TrashPageState extends State<TrashPage> {
   @override
   Widget build(BuildContext context) {
     routinesProvider = Provider.of<RoutineController>(context);
-
+    ScreenUtil.init(context,
+        designSize: const Size(
+            Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
     return routinesProvider.getAllRoutinesOnTrash().isEmpty
         ? Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: const Text("Lixeira"),
+              title: Text("trash".i18n()),
             ),
             body: TrashBody(),
           )
         : Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: const Text("Lixeira"),
+              title: Text("trash".i18n()),
             ),
             body: TrashBody(),
             floatingActionButton: Column(
@@ -34,22 +40,22 @@ class _TrashPageState extends State<TrashPage> {
               children: [
                 if (routinesProvider.getAllRoutinesSelectedOnTrash().isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10).r,
                     child: FloatingActionButton(
                       heroTag: "restoreFromTrash",
                       onPressed: () async {
                         await routinesProvider
                             .restoreElementsSelectedFromTrash()
                             .then((_) {
-                          const itensRestored = SnackBar(
+                          var itensRestored = SnackBar(
                             content: Text(
-                              'Itens restaurados da Lixeira',
-                              style: TextStyle(
+                              "itemsRestoredFromTrash".i18n(),
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.amber,
                               ),
                             ),
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                           );
                           ScaffoldMessenger.of(context)
                               .showSnackBar(itensRestored);

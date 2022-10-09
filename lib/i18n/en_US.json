@@ -7,5 +7,11 @@
     "clearTrash": "Clear trash",
     "cancel": "Cancel",
     "warningCleanTrashPermanently": "If you click 'Clear', all tasks in the trash will be permanently deleted!",
-    "cleanTrash": "Clean trash"
+    "cleanTrash": "Clean trash",
+    "addNewTask": "Add new task",
+    "create": "Create",
+    "name": "Name",
+    "pleaseTypeTheNameTask": "Please type the task name",
+    "itemsRestoredFromTrash": "Items restored from trash",
+    "taskChecked": "Activity marked as complete!"
 }

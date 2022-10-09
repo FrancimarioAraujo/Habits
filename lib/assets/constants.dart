@@ -1,0 +1,4 @@
+class Constants {
+  static const HEIGHT_DEVICE_DEFAULT = 890.2857142857143;
+  static const WIDTH_DEVICE_DEFAULT = 411.42857142857144;
+}

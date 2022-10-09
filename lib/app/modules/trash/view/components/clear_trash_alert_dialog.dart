@@ -14,7 +14,7 @@ class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
   Widget build(BuildContext context) {
     routinesProvider = Provider.of<RoutineController>(context);
     return AlertDialog(
-      title: const Text('Esvaziar Lixeira'),
+      title: Text("clearTrash".i18n()),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
@@ -32,15 +32,15 @@ class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
           ),
           onPressed: () async {
             await routinesProvider.clearTrash().then((_) {
-              const trashCleaned = SnackBar(
+              var trashCleaned = SnackBar(
                 content: Text(
-                  'Lixeira limpada',
-                  style: TextStyle(
+                  "cleanTrash".i18n(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.amber,
                   ),
                 ),
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
               );
               ScaffoldMessenger.of(context).showSnackBar(trashCleaned);
               Navigator.pop(context);
@@ -48,7 +48,7 @@ class _ClearTrashAlertDialogState extends State<ClearTrashAlertDialog> {
           },
         ),
         TextButton(
-          child: const Text('Cancelar'),
+          child: Text("cancel".i18n()),
           onPressed: () {
             Navigator.of(context).pop();
           },

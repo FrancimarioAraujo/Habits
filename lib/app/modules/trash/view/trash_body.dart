@@ -1,8 +1,12 @@
-import 'package:click/app/modules/routine/view/components/CardRoutine.dart';
-import 'package:click/app/modules/trash/view/components/CardTrash.dart';
+import 'package:click/app/modules/routine/view/components/card_routine.dart';
+import 'package:click/app/modules/trash/view/components/card_trash.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../assets/constants.dart';
 
 class TrashBody extends StatefulWidget {
   @override
@@ -28,6 +32,9 @@ class _TrashBodyState extends State<TrashBody> {
     routinesProvider = Provider.of<RoutineController>(context);
     ColorScheme themeColor = Theme.of(context).colorScheme;
     _hasRoutinesOnTrash = routinesProvider.getAllRoutinesOnTrash().isNotEmpty;
+    ScreenUtil.init(context,
+        designSize: const Size(
+            Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
     return _loading
         ? Center(
             child: CircularProgressIndicator(
@@ -42,12 +49,12 @@ class _TrashBodyState extends State<TrashBody> {
                       routinesProvider.getAllRoutinesOnTrash()[index]);
                 },
               )
-            : const Center(
+            : Center(
                 child: Text(
-                  "Lixeira Vazia",
+                  "cleanTrash".i18n(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                   ),
                 ),
               );

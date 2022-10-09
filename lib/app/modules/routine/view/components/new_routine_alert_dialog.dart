@@ -1,6 +1,10 @@
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../assets/constants.dart';
 
 class NewRoutineAlertDialog extends StatefulWidget {
   @override
@@ -16,31 +20,33 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme themeColor = Theme.of(context).colorScheme;
     routinesProvider = Provider.of<RoutineController>(context);
+    ScreenUtil.init(context,
+        designSize: const Size(
+            Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
     return AlertDialog(
-      title: const Text("Adicionar nova tarefa"),
+      title: Text("addNewTask".i18n()),
       content: Form(
         key: _formKey,
         child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.2,
+          height: 150.h,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextFormField(
                 controller: _nameRoutineTextController,
-                decoration: const InputDecoration(
-                  labelText: "Nome",
+                decoration: InputDecoration(
+                  labelText: "name".i18n(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Por favor digite o nome da tarefa";
+                    return "pleaseTypeTheNameTask".i18n();
                   }
                   return null;
                 },
               ),
               SizedBox(
-                width: double.infinity,
+                width: double.infinity.w,
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -49,7 +55,7 @@ class _NewRoutineAlertDialogState extends State<NewRoutineAlertDialog> {
                       Navigator.pop(context);
                     }
                   },
-                  child: const Text("Criar"),
+                  child: Text("create".i18n()),
                 ),
               ),
             ],
