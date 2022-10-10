@@ -38,10 +38,10 @@ class _CardRoutineState extends State<CardRoutine> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5).r,
         child: Dismissible(
+          key: ValueKey<RoutineModel>(widget.routine),
           background: Container(
             color: Colors.red,
           ),
-          key: ValueKey<RoutineModel>(widget.routine),
           onDismissed: (DismissDirection direction) async {
             await routinesController.addOrRemoveRoutineFromTrash(
                 routine: widget.routine, onTrash: true);

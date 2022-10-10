@@ -9,6 +9,38 @@ part of 'routine_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RoutineController on _RoutineController, Store {
+  Computed<bool>? _$hasRoutinesOutSideFromTrashComputed;
+
+  @override
+  bool get hasRoutinesOutSideFromTrash =>
+      (_$hasRoutinesOutSideFromTrashComputed ??= Computed<bool>(
+              () => super.hasRoutinesOutSideFromTrash,
+              name: '_RoutineController.hasRoutinesOutSideFromTrash'))
+          .value;
+  Computed<List<RoutineModel>>? _$routinesOutSideFromTrashComputed;
+
+  @override
+  List<RoutineModel> get routinesOutSideFromTrash =>
+      (_$routinesOutSideFromTrashComputed ??= Computed<List<RoutineModel>>(
+              () => super.routinesOutSideFromTrash,
+              name: '_RoutineController.routinesOutSideFromTrash'))
+          .value;
+  Computed<List<RoutineModel>>? _$routinesOnTrashComputed;
+
+  @override
+  List<RoutineModel> get routinesOnTrash => (_$routinesOnTrashComputed ??=
+          Computed<List<RoutineModel>>(() => super.routinesOnTrash,
+              name: '_RoutineController.routinesOnTrash'))
+      .value;
+  Computed<List<RoutineModel>>? _$routinesSelectedOnTrashComputed;
+
+  @override
+  List<RoutineModel> get routinesSelectedOnTrash =>
+      (_$routinesSelectedOnTrashComputed ??= Computed<List<RoutineModel>>(
+              () => super.routinesSelectedOnTrash,
+              name: '_RoutineController.routinesSelectedOnTrash'))
+          .value;
+
   late final _$routinesAtom =
       Atom(name: '_RoutineController.routines', context: context);
 
@@ -22,6 +54,22 @@ mixin _$RoutineController on _RoutineController, Store {
   set routines(List<RoutineModel> value) {
     _$routinesAtom.reportWrite(value, super.routines, () {
       super.routines = value;
+    });
+  }
+
+  late final _$isLoadingAtom =
+      Atom(name: '_RoutineController.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
     });
   }
 
@@ -101,7 +149,12 @@ mixin _$RoutineController on _RoutineController, Store {
   @override
   String toString() {
     return '''
-routines: ${routines}
+routines: ${routines},
+isLoading: ${isLoading},
+hasRoutinesOutSideFromTrash: ${hasRoutinesOutSideFromTrash},
+routinesOutSideFromTrash: ${routinesOutSideFromTrash},
+routinesOnTrash: ${routinesOnTrash},
+routinesSelectedOnTrash: ${routinesSelectedOnTrash}
     ''';
   }
 }

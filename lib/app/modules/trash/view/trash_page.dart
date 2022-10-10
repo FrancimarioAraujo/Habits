@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:localization/localization.dart';
-import 'package:provider/provider.dart';
-
 import '../../../../assets/constants.dart';
 
 class TrashPage extends StatefulWidget {
@@ -21,7 +19,7 @@ class _TrashPageState extends State<TrashPage> {
     ScreenUtil.init(context,
         designSize: const Size(
             Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
-    return routinesController.getAllRoutinesOnTrash().isEmpty
+    return routinesController.routinesOnTrash.isEmpty
         ? Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -38,9 +36,7 @@ class _TrashPageState extends State<TrashPage> {
             floatingActionButton: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (routinesController
-                    .getAllRoutinesSelectedOnTrash()
-                    .isNotEmpty)
+                if (routinesController.routinesSelectedOnTrash.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10).r,
                     child: FloatingActionButton(

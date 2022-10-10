@@ -15,6 +15,26 @@ abstract class _RoutineController with Store {
   @observable
   List<RoutineModel> routines = ObservableList<RoutineModel>();
 
+  @observable
+  bool isLoading = false;
+
+  @computed
+  bool get hasRoutinesOutSideFromTrash =>
+      routines.where((routine) => !routine.onTrash).toList().isNotEmpty;
+
+  @computed
+  List<RoutineModel> get routinesOutSideFromTrash =>
+      routines.where((routine) => !routine.onTrash).toList();
+
+  @computed
+  List<RoutineModel> get routinesOnTrash =>
+      routines.where((routine) => routine.onTrash).toList();
+
+  @computed
+  List<RoutineModel> get routinesSelectedOnTrash => routinesOnTrash
+      .where((routineOnTrash) => routineOnTrash.selectedToRestore)
+      .toList();
+
   String _generateNewRoutineId() {
     return _uuid.v4();
   }
@@ -32,18 +52,8 @@ abstract class _RoutineController with Store {
     routine.selectedToRestore = value;
   }
 
-  List<RoutineModel> getAllRoutinesSelectedOnTrash() {
-    List<RoutineModel> routinesOnTrash = getAllRoutinesOnTrash();
-    List<RoutineModel> routinesSelectedOnTrash = routinesOnTrash
-        .where((routineOnTrash) => routineOnTrash.selectedToRestore)
-        .toList();
-    return routinesSelectedOnTrash;
-  }
-
   @action
   Future<void> restoreElementsSelectedFromTrash() async {
-    List<RoutineModel> routinesSelectedOnTrash =
-        getAllRoutinesSelectedOnTrash();
     for (var routineSelectedOnTrash in routinesSelectedOnTrash) {
       routineSelectedOnTrash.onTrash = false;
       routineSelectedOnTrash.selectedToRestore = false;
@@ -53,7 +63,7 @@ abstract class _RoutineController with Store {
 
   @action
   Future<void> clearTrash() async {
-    for (var routineOnTrash in getAllRoutinesOnTrash()) {
+    for (var routineOnTrash in routinesOnTrash) {
       routines.remove(routineOnTrash);
       await _routinesDB.deleteRoutine(routineOnTrash);
     }
@@ -63,29 +73,19 @@ abstract class _RoutineController with Store {
   Future<void> addOrRemoveRoutineFromTrash(
       {required RoutineModel routine, required bool onTrash}) async {
     routine.onTrash = onTrash;
+    routinesOutSideFromTrash.remove(routine);
     await _routinesDB.updateRoutine(routine);
-  }
-
-  List<RoutineModel> getAllRoutinesOnTrash() {
-    List<RoutineModel> routinesOnTrash = [];
-    routinesOnTrash = routines.where((routine) => routine.onTrash).toList();
-    return routinesOnTrash;
-  }
-
-  List<RoutineModel> getAllRoutinesOutSideFromTrash() {
-    List<RoutineModel> routinesOutSideFromTrash = [];
-    routinesOutSideFromTrash =
-        routines.where((routine) => !routine.onTrash).toList();
-    return routinesOutSideFromTrash;
   }
 
   @action
   Future<void> fetchRoutines() async {
     if (routines.isEmpty) {
+      isLoading = true;
       List<dynamic> routinesQuery = await _routinesDB.getRoutines();
       for (var routineQuery in routinesQuery) {
         routines.add(RoutineModel.fromJson(routineQuery));
       }
+      isLoading = false;
     }
   }
 

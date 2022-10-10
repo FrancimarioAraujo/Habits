@@ -31,7 +31,7 @@ class _TrashBodyState extends State<TrashBody> {
   @override
   Widget build(BuildContext context) {
     ColorScheme themeColor = Theme.of(context).colorScheme;
-    _hasRoutinesOnTrash = routinesController.getAllRoutinesOnTrash().isNotEmpty;
+    _hasRoutinesOnTrash = routinesController.routinesOnTrash.isNotEmpty;
     ScreenUtil.init(context,
         designSize: const Size(
             Constants.WIDTH_DEVICE_DEFAULT, Constants.HEIGHT_DEVICE_DEFAULT));
@@ -43,10 +43,9 @@ class _TrashBodyState extends State<TrashBody> {
           )
         : _hasRoutinesOnTrash
             ? ListView.builder(
-                itemCount: routinesController.getAllRoutinesOnTrash().length,
+                itemCount: routinesController.routinesOnTrash.length,
                 itemBuilder: (context, index) {
-                  return CardTrash(
-                      routinesController.getAllRoutinesOnTrash()[index]);
+                  return CardTrash(routinesController.routinesOnTrash[index]);
                 },
               )
             : Center(

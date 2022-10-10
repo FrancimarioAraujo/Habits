@@ -3,14 +3,12 @@ import 'package:click/app/modules/routine/controller/routine_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../assets/constants.dart';
 
 class CardTrash extends StatefulWidget {
-  RoutineModel routine;
-  CardTrash(this.routine);
+  final RoutineModel routine;
+  const CardTrash(this.routine, {Key? key}) : super(key: key);
   @override
   State<CardTrash> createState() => _CardTrashState();
 }

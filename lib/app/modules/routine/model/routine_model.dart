@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mobx/mobx.dart';
+
 final String tableRoutines = "tableRoutines";
 
 class RoutineFields {
