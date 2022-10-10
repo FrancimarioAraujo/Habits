@@ -15,6 +15,12 @@ class TrashPage extends StatefulWidget {
 class _TrashPageState extends State<TrashPage> {
   final routinesController = Modular.get<RoutineController>();
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routinesController.fetchRoutines();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
         designSize: const Size(

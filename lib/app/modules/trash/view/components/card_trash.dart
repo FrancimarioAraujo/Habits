@@ -69,9 +69,7 @@ class _CardTrashState extends State<CardTrash> {
                 onChanged: (value) {
                   routinesController.selectOrDeselectToRestore(
                       widget.routine, value!);
-                  setState(() {
-                    _selected = value;
-                  });
+                  _selected = value;
                 },
               ),
             ),

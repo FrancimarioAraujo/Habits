@@ -43,35 +43,36 @@ class _RoutinePageState extends State<RoutinePage> {
           ),
         ],
       ),
-      body: Observer(builder: (_) {
-        if (routinesController.isLoading) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: themeColor.secondary,
-            ),
-          );
-        }
-        if (!routinesController.hasRoutinesOutSideFromTrash) {
-          return Center(
-            child: Text(
-              "thereAreNoTasks".i18n(),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.sp,
+      body: Observer(
+        builder: (_) {
+          if (routinesController.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: themeColor.secondary,
               ),
-            ),
-          );
-        }
-        return Observer(
-          builder: (_) => ListView.builder(
+            );
+          }
+          if (routinesController.routinesOutSideFromTrash.isEmpty) {
+            return Center(
+              child: Text(
+                "thereAreNoTasks".i18n(),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.sp,
+                ),
+              ),
+            );
+          }
+
+          return ListView.builder(
             itemCount: routinesController.routinesOutSideFromTrash.length,
             itemBuilder: (context, index) {
               return CardRoutine(
                   routinesController.routinesOutSideFromTrash[index]);
             },
-          ),
-        );
-      }),
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         heroTag: "addNewRoutine",
         onPressed: () {

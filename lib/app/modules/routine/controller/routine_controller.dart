@@ -19,10 +19,6 @@ abstract class _RoutineController with Store {
   bool isLoading = false;
 
   @computed
-  bool get hasRoutinesOutSideFromTrash =>
-      routines.where((routine) => !routine.onTrash).toList().isNotEmpty;
-
-  @computed
   List<RoutineModel> get routinesOutSideFromTrash =>
       routines.where((routine) => !routine.onTrash).toList();
 
@@ -50,6 +46,7 @@ abstract class _RoutineController with Store {
   Future<void> selectOrDeselectToRestore(
       RoutineModel routine, bool value) async {
     routine.selectedToRestore = value;
+    routinesSelectedOnTrash.add(routine);
   }
 
   @action
@@ -73,7 +70,11 @@ abstract class _RoutineController with Store {
   Future<void> addOrRemoveRoutineFromTrash(
       {required RoutineModel routine, required bool onTrash}) async {
     routine.onTrash = onTrash;
-    routinesOutSideFromTrash.remove(routine);
+    if (onTrash) {
+      routinesOutSideFromTrash.remove(routine);
+    } else {
+      routinesOutSideFromTrash.add(routine);
+    }
     await _routinesDB.updateRoutine(routine);
   }
 

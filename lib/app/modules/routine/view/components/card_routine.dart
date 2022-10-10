@@ -95,9 +95,8 @@ class _CardRoutineState extends State<CardRoutine> {
                             .showSnackBar(taskConcluded);
                       }
                     });
-                    setState(() {
-                      _selected = value;
-                    });
+
+                    _selected = value;
                   },
                 ),
               ),
