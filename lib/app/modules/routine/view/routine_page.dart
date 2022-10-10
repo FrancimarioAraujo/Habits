@@ -34,14 +34,6 @@ class _RoutinePageState extends State<RoutinePage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("tasks".i18n()),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              Modular.to.pushNamed('/trash/');
-            },
-          ),
-        ],
       ),
       body: Observer(
         builder: (_) {
