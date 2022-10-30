@@ -44,7 +44,7 @@ class _RoutinePageState extends State<RoutinePage> {
               ),
             );
           }
-          if (routinesController.routinesOutSideFromTrash.isEmpty) {
+          if (routinesController.routines.isEmpty) {
             return Center(
               child: Text(
                 "thereAreNoTasks".i18n(),
@@ -56,13 +56,14 @@ class _RoutinePageState extends State<RoutinePage> {
             );
           }
 
-          return ListView.builder(
-            itemCount: routinesController.routinesOutSideFromTrash.length,
-            itemBuilder: (context, index) {
-              return CardRoutine(
-                  routinesController.routinesOutSideFromTrash[index]);
-            },
-          );
+          return Observer(builder: (_) {
+            return ListView.builder(
+              itemCount: routinesController.routines.length,
+              itemBuilder: (context, index) {
+                return CardRoutine(routinesController.routines[index]);
+              },
+            );
+          });
         },
       ),
       floatingActionButton: FloatingActionButton(

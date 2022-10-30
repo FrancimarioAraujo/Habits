@@ -9,30 +9,6 @@ part of 'routine_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RoutineController on _RoutineController, Store {
-  Computed<List<RoutineModel>>? _$routinesOutSideFromTrashComputed;
-
-  @override
-  List<RoutineModel> get routinesOutSideFromTrash =>
-      (_$routinesOutSideFromTrashComputed ??= Computed<List<RoutineModel>>(
-              () => super.routinesOutSideFromTrash,
-              name: '_RoutineController.routinesOutSideFromTrash'))
-          .value;
-  Computed<List<RoutineModel>>? _$routinesOnTrashComputed;
-
-  @override
-  List<RoutineModel> get routinesOnTrash => (_$routinesOnTrashComputed ??=
-          Computed<List<RoutineModel>>(() => super.routinesOnTrash,
-              name: '_RoutineController.routinesOnTrash'))
-      .value;
-  Computed<List<RoutineModel>>? _$routinesSelectedOnTrashComputed;
-
-  @override
-  List<RoutineModel> get routinesSelectedOnTrash =>
-      (_$routinesSelectedOnTrashComputed ??= Computed<List<RoutineModel>>(
-              () => super.routinesSelectedOnTrash,
-              name: '_RoutineController.routinesSelectedOnTrash'))
-          .value;
-
   late final _$routinesAtom =
       Atom(name: '_RoutineController.routines', context: context);
 
@@ -75,43 +51,12 @@ mixin _$RoutineController on _RoutineController, Store {
         .run(() => super.concludeOrMarkOffRoutine(routine, value));
   }
 
-  late final _$selectOrDeselectToRestoreAsyncAction = AsyncAction(
-      '_RoutineController.selectOrDeselectToRestore',
-      context: context);
+  late final _$updateRoutineAsyncAction =
+      AsyncAction('_RoutineController.updateRoutine', context: context);
 
   @override
-  Future<void> selectOrDeselectToRestore(RoutineModel routine, bool value) {
-    return _$selectOrDeselectToRestoreAsyncAction
-        .run(() => super.selectOrDeselectToRestore(routine, value));
-  }
-
-  late final _$restoreElementsSelectedFromTrashAsyncAction = AsyncAction(
-      '_RoutineController.restoreElementsSelectedFromTrash',
-      context: context);
-
-  @override
-  Future<void> restoreElementsSelectedFromTrash() {
-    return _$restoreElementsSelectedFromTrashAsyncAction
-        .run(() => super.restoreElementsSelectedFromTrash());
-  }
-
-  late final _$clearTrashAsyncAction =
-      AsyncAction('_RoutineController.clearTrash', context: context);
-
-  @override
-  Future<void> clearTrash() {
-    return _$clearTrashAsyncAction.run(() => super.clearTrash());
-  }
-
-  late final _$addOrRemoveRoutineFromTrashAsyncAction = AsyncAction(
-      '_RoutineController.addOrRemoveRoutineFromTrash',
-      context: context);
-
-  @override
-  Future<void> addOrRemoveRoutineFromTrash(
-      {required RoutineModel routine, required bool onTrash}) {
-    return _$addOrRemoveRoutineFromTrashAsyncAction.run(() =>
-        super.addOrRemoveRoutineFromTrash(routine: routine, onTrash: onTrash));
+  Future<void> updateRoutine(RoutineModel routine) {
+    return _$updateRoutineAsyncAction.run(() => super.updateRoutine(routine));
   }
 
   late final _$fetchRoutinesAsyncAction =
@@ -142,10 +87,7 @@ mixin _$RoutineController on _RoutineController, Store {
   String toString() {
     return '''
 routines: ${routines},
-isLoading: ${isLoading},
-routinesOutSideFromTrash: ${routinesOutSideFromTrash},
-routinesOnTrash: ${routinesOnTrash},
-routinesSelectedOnTrash: ${routinesSelectedOnTrash}
+isLoading: ${isLoading}
     ''';
   }
 }

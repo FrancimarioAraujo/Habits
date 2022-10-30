@@ -1,30 +1,24 @@
 import 'package:click/app/modules/routine/model/routine_model.dart';
 import 'package:click/app/modules/routine/controller/routine_controller.dart';
+import 'package:click/app/modules/routine/view/components/checkbox_routine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:localization/localization.dart';
-import 'package:provider/provider.dart';
-
 import '../../../../../assets/constants.dart';
 
 class CardRoutine extends StatefulWidget {
   RoutineModel routine;
-  CardRoutine(this.routine);
+  CardRoutine(this.routine, {Key? key}) : super(key: key);
   @override
   State<CardRoutine> createState() => _CardRoutineState();
 }
 
 class _CardRoutineState extends State<CardRoutine> {
   final routinesController = Modular.get<RoutineController>();
-  bool? _selected;
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _selected = widget.routine.concluded;
   }
 
   @override
@@ -43,8 +37,7 @@ class _CardRoutineState extends State<CardRoutine> {
             color: Colors.red,
           ),
           onDismissed: (DismissDirection direction) async {
-            await routinesController.addOrRemoveRoutineFromTrash(
-                routine: widget.routine, onTrash: true);
+            await routinesController.deleteRoutine(widget.routine);
           },
           child: Card(
             shape: RoundedRectangleBorder(
@@ -52,55 +45,24 @@ class _CardRoutineState extends State<CardRoutine> {
             ),
             color: themeColor.primary,
             child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: themeColor.tertiary,
-                child: Text(
-                  widget.routine.name.substring(0, 1),
-                  style: TextStyle(
-                    color: themeColor.primary,
-                    fontWeight: FontWeight.bold,
+                leading: CircleAvatar(
+                  backgroundColor: themeColor.tertiary,
+                  child: Text(
+                    widget.routine.name.substring(0, 1),
+                    style: TextStyle(
+                      color: themeColor.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              title: Text(
-                widget.routine.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: themeColor.tertiary,
+                title: Text(
+                  widget.routine.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: themeColor.tertiary,
+                  ),
                 ),
-              ),
-              trailing: Transform.scale(
-                scale: 2.0.r,
-                child: Checkbox(
-                  checkColor: Colors.white,
-                  fillColor: MaterialStateProperty.all(themeColor.secondary),
-                  value: _selected,
-                  shape: const CircleBorder(),
-                  onChanged: (value) {
-                    routinesController
-                        .concludeOrMarkOffRoutine(widget.routine, value!)
-                        .then((_) {
-                      if (value) {
-                        var taskConcluded = SnackBar(
-                          content: Text(
-                            "taskChecked".i18n(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.amber,
-                            ),
-                          ),
-                          duration: const Duration(milliseconds: 500),
-                        );
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(taskConcluded);
-                      }
-                    });
-
-                    _selected = value;
-                  },
-                ),
-              ),
-            ),
+                trailing: CheckBoxRoutine(widget.routine)),
           ),
         ),
       ),

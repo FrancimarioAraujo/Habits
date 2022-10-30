@@ -1,4 +1,4 @@
-import 'package:click/app/modules/routine/routines_db.dart';
+import 'package:click/app/modules/routine/db/routines_db.dart';
 import 'package:click/app/modules/routine/model/routine_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,63 +18,25 @@ abstract class _RoutineController with Store {
   @observable
   bool isLoading = false;
 
-  @computed
-  List<RoutineModel> get routinesOutSideFromTrash =>
-      routines.where((routine) => !routine.onTrash).toList();
-
-  @computed
-  List<RoutineModel> get routinesOnTrash =>
-      routines.where((routine) => routine.onTrash).toList();
-
-  @computed
-  List<RoutineModel> get routinesSelectedOnTrash => routinesOnTrash
-      .where((routineOnTrash) => routineOnTrash.selectedToRestore)
-      .toList();
-
   String _generateNewRoutineId() {
     return _uuid.v4();
+  }
+
+  RoutineModel getRoutine(RoutineModel routine) {
+    return routines.firstWhere((element) => element.id == routine.id);
   }
 
   @action
   Future<void> concludeOrMarkOffRoutine(
       RoutineModel routine, bool value) async {
     routine.concluded = value;
-    await _routinesDB.updateRoutine(routine);
+    await updateRoutine(routine);
   }
 
   @action
-  Future<void> selectOrDeselectToRestore(
-      RoutineModel routine, bool value) async {
-    routine.selectedToRestore = value;
-    routinesSelectedOnTrash.add(routine);
-  }
-
-  @action
-  Future<void> restoreElementsSelectedFromTrash() async {
-    for (var routineSelectedOnTrash in routinesSelectedOnTrash) {
-      routineSelectedOnTrash.onTrash = false;
-      routineSelectedOnTrash.selectedToRestore = false;
-      await _routinesDB.updateRoutine(routineSelectedOnTrash);
-    }
-  }
-
-  @action
-  Future<void> clearTrash() async {
-    for (var routineOnTrash in routinesOnTrash) {
-      routines.remove(routineOnTrash);
-      await _routinesDB.deleteRoutine(routineOnTrash);
-    }
-  }
-
-  @action
-  Future<void> addOrRemoveRoutineFromTrash(
-      {required RoutineModel routine, required bool onTrash}) async {
-    routine.onTrash = onTrash;
-    if (onTrash) {
-      routinesOutSideFromTrash.remove(routine);
-    } else {
-      routinesOutSideFromTrash.add(routine);
-    }
+  Future<void> updateRoutine(RoutineModel routine) async {
+    int indexOfRoutine = routines.indexOf(routine);
+    routines[indexOfRoutine] = routine;
     await _routinesDB.updateRoutine(routine);
   }
 
@@ -97,7 +59,6 @@ abstract class _RoutineController with Store {
         "id": _generateNewRoutineId(),
         "name": name,
         "concluded": false,
-        "onTrash": false,
         "selectedToRestore": false
       },
     );

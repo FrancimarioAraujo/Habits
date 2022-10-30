@@ -15,7 +15,7 @@ class RoutinesDB {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('routines.db');
+    _database = await _initDB('routines2.db');
     return _database!;
   }
 
@@ -23,7 +23,7 @@ class RoutinesDB {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
     return await openDatabase(path,
-        version: 4, onCreate: _createDB, onUpgrade: _onUpgrade);
+        version: 5, onCreate: _createDB, onUpgrade: _onUpgrade);
   }
 
   Future _createDB(Database db, int version) async {
@@ -31,8 +31,7 @@ class RoutinesDB {
       CREATE TABLE $tableRoutines(
         ${routineFields.id} $idType, 
         ${routineFields.name} $textType,
-        ${routineFields.concluded} $integerType,
-        ${routineFields.onTrash} $integerType
+        ${routineFields.concluded} $integerType
       )
 ''');
   }

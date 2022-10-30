@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: theme.copyWith(
           colorScheme: theme.colorScheme.copyWith(
-            primary: Colors.blue,
+            primary: Colors.purple,
             secondary: Colors.orange,
             tertiary: Colors.white,
           ),
