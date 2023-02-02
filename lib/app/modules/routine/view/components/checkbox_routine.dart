@@ -15,41 +15,36 @@ class CheckBoxRoutine extends StatefulWidget {
 }
 
 class _CheckBoxRoutineState extends State<CheckBoxRoutine> {
-  final routinesController = Modular.get<RoutineController>();
-
   @override
   Widget build(BuildContext context) {
     ColorScheme themeColor = Theme.of(context).colorScheme;
+    final routinesController = Modular.get<RoutineController>();
+    RoutineModel routine = routinesController.getRoutine(widget.routine);
     return Transform.scale(
       scale: 2.0.r,
-      child: Observer(builder: (_) {
-        return Checkbox(
-          checkColor: Colors.white,
-          fillColor: MaterialStateProperty.all(themeColor.secondary),
-          value: routinesController.getRoutine(widget.routine).concluded,
-          shape: const CircleBorder(),
-          onChanged: (value) {
-            routinesController
-                .concludeOrMarkOffRoutine(widget.routine, value!)
-                .then((_) {
-              setState(() {});
-              if (value) {
-                SnackBar taskConcluded = SnackBar(
-                  content: Text(
-                    "taskChecked".i18n(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
-                    ),
-                  ),
-                  duration: const Duration(milliseconds: 500),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(taskConcluded);
-              }
-            });
-          },
-        );
-      }),
+      child: Checkbox(
+        checkColor: Colors.white,
+        fillColor: MaterialStateProperty.all(themeColor.secondary),
+        value: routine.concluded,
+        shape: const CircleBorder(),
+        onChanged: (value) async {
+          await routinesController.concludeOrMarkOffRoutine(routine, value!);
+          if (value) {
+            SnackBar taskConcluded = SnackBar(
+              content: Text(
+                "taskChecked".i18n(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber,
+                ),
+              ),
+              duration: const Duration(milliseconds: 500),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(taskConcluded);
+          }
+          setState(() {});
+        },
+      ),
     );
   }
 }
